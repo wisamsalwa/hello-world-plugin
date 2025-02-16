@@ -1,4 +1,4 @@
-# Hello World Plugin
+# Hello World
 
 This Hello World Plugin is a simple, minimalistic plugin designed to serve as a starting point for WordPress plugin development.
 It demonstrates the basic structure of a WordPress plugin and includes a core mechanism for displaying content in the admin panel. 

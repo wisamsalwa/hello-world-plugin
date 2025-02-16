@@ -21,7 +21,7 @@ class hw_Plugin_Updater
         $this->plugin_file = $plugin_file;
         $this->update_url = $update_url;
 
-        // Hook into the update process **** both line that i deleted to upload plugin to wordpress.org
+        // Hook into the update process
         add_filter('site_transient_update_plugins', array($this, 'check_for_updates'));
         add_filter('upgrader_post_install', array($this, 'rename_update_folder'), 10, 3);
     }

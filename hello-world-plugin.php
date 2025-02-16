@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: Hello World Plugin
+Plugin Name: Hello World
 Text Domain: hello-world-plugin
 Description: A simple plugin to display "Hello World" in the WordPress admin panel, with plugin check for update.
-Version: 2.0
+Version: 1.0
 Author: Wisam Essalwa
 Author URI: https://github.com/wisamsalwa
 License: GPL-2.0+
@@ -53,7 +53,7 @@ function hello_world_plugin_info($false, $action, $args)
         if (!is_wp_error($remote) && isset($remote['response']['code']) && $remote['response']['code'] == 200 && !empty($remote['body'])) {
             $remote_data = json_decode($remote['body']);
             return (object) array(
-                'name' => 'Hello World Plugin',
+                'name' => 'Hello World',
                 'slug' => 'hello-world-plugin',
                 'version' => $remote_data->version,
                 'last_updated' => $remote_data->last_updated,
@@ -68,3 +68,5 @@ function hello_world_plugin_info($false, $action, $args)
     return $false;
 }
 add_filter('plugins_api', 'hello_world_plugin_info', 10, 3);
+
+
