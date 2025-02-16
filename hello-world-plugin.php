@@ -3,7 +3,7 @@
 Plugin Name: Hello World
 Text Domain: hello-world-plugin
 Description: A simple plugin to display "Hello World" in the WordPress admin panel, with plugin check for update.
-Version: 4.2
+Version: 4.3
 Author: Wisam Essalwa
 Author URI: https://github.com/wisamsalwa
 License: GPL-2.0+
