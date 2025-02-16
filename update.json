@@ -1,0 +1,11 @@
+{
+    "version": "1.0",
+    "download_url": "https://github.com/wisamsalwa/hello-world-plugin/archive/refs/heads/main.zip",
+    "last_updated": "2025-02-15",
+    "requires": "5.0",
+    "tested": "6.7",
+    "author": "Wisam Essalwa",
+    "sections": {
+        "description": "A simple plugin to display 'Hello World' in the WordPress admin panel, with plugin check for update"
+    }
+}
