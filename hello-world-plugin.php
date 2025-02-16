@@ -16,7 +16,7 @@ require_once plugin_dir_path(__FILE__) . 'hw_Plugin_Updater.php';
 new Plugin_Updater(
     'hello-world-plugin', // Plugin slug
     'hello-world-plugin/hello-world-plugin.php', // Plugin file
-    'https://raw.githubusercontent.com/wisamsalwa/direction_tgl/refs/heads/main/update.json'
+    'https://raw.githubusercontent.com/wisamsalwa/hello-world-plugin/refs/heads/main/update.json'
 );
 
 
