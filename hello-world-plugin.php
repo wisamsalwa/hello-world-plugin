@@ -13,7 +13,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 require_once plugin_dir_path(__FILE__) . 'hw_Plugin_Updater.php';
 
-new Plugin_Updater(
+new hw_Plugin_Updater(
     'hello-world-plugin', // Plugin slug
     'hello-world-plugin/hello-world-plugin.php', // Plugin file
     'https://raw.githubusercontent.com/wisamsalwa/hello-world-plugin/refs/heads/main/update.json'
@@ -69,4 +69,5 @@ function hello_world_plugin_info($false, $action, $args)
 }
 add_filter('plugins_api', 'hello_world_plugin_info', 10, 3);
 
+ 
 
