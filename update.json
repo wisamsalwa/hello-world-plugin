@@ -6,6 +6,7 @@
     "tested": "6.7",
     "author": "Wisam Essalwa",
     "sections": {
-        "description": "A simple plugin to display 'Hello World' in the WordPress admin panel, with plugin check for update"
-    }
+        "description": "A simple plugin to display 'Hello World' in the WordPress admin panel.",
+        "changelog": "<h4>Version 1.0</h4><ul><li>Initial release.</li></ul>"
+     }
 }
