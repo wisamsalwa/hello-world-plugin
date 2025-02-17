@@ -3,7 +3,7 @@
 Plugin Name: Hello World
 Text Domain: hello-world-plugin
 Description: A simple plugin to display "Hello World" in the WordPress admin panel, with plugin check for update.
-Version: 4.1
+Version: 4.8
 Author: Wisam Essalwa
 Author URI: https://github.com/wisamsalwa
 License: GPL-2.0+
@@ -38,38 +38,61 @@ function hello_world_admin_notice()
 // Hook the function to the admin_notices action
 add_action('admin_notices', 'hello_world_admin_notice');
 
+function hello_world_plugin_info($false, $action, $args) {
+    // Check if the request is for your plugin
+    if (isset($args->slug) && $args->slug === 'hello-world-plugin') {
+        // Remote URL to fetch plugin information
+        $remote_url = 'https://raw.githubusercontent.com/wisamsalwa/hello-world-plugin/refs/heads/main/update.json';
 
-
-function hello_world_plugin_info($false, $action, $args)
-{
-    if ($args->slug === 'hello-world-plugin') {
-        // Get the remote update.json file
-        $remote = wp_remote_get('https://raw.githubusercontent.com/wisamsalwa/hello-world-plugin/refs/heads/main/update.json', array(
+        // Fetch the remote data
+        $remote_response = wp_remote_get($remote_url, array(
             'timeout' => 10,
             'headers' => array(
-                'Accept' => 'application/json'
-            )
+                'Accept' => 'application/json',
+            ),
         ));
 
-        if (!is_wp_error($remote) && isset($remote['response']['code']) && $remote['response']['code'] == 200 && !empty($remote['body'])) {
-            $remote_data = json_decode($remote['body']);
-            return (object) array(
-                'name' => 'Hello World',
-                'slug' => 'hello-world-plugin',
-                'version' => $remote_data->version,
-                'last_updated' => $remote_data->last_updated,
-                'download_link' => $remote_data->download_url,
-                'sections' => $remote_data->sections,
-                'requires' => $remote_data->requires,
-                'tested' => $remote_data->tested,
-                'sections' => array(
-                    'description' => 'A simple plugin to display "Hello World" in the WordPress admin panel.',
-                    'changelog' => '<h4>Version 1.0</h4><ul><li>Initial release.</li></ul>',
-                )
-            );
+        // Check for errors in the HTTP request
+        if (is_wp_error($remote_response)) {
+            error_log('Error fetching remote data: ' . $remote_response->get_error_message());
+            return $false;
         }
+
+        // Get the response body
+        $remote_body = wp_remote_retrieve_body($remote_response);
+
+        // Log the raw response body for debugging
+        error_log('Remote response body: ' . $remote_body);
+
+        // Decode the JSON response as an array
+        $remote_data = json_decode($remote_body, true);
+
+        // Log the decoded data for debugging
+        error_log('Decoded remote data: ' . print_r($remote_data, true));
+
+        // Ensure the remote data contains the required sections
+        if (empty($remote_data['sections'])) {
+            error_log('Remote data is missing sections.');
+            return $false;
+        }
+
+        // Plugin information array
+        $plugin_info = array(
+            'name' => 'Hello World Plugin',
+            'slug' => 'hello-world-plugin',
+            'version' => $remote_data['version'] ?? '1.0', // Use remote version or fallback
+            'author' => $remote_data['author'] ?? 'Wisam Essalwa', // Use remote author or fallback
+            'author_profile' => $remote_data['author_profile'] ?? 'https://github.com/wisamsalwa',
+            'last_updated' => $remote_data['last_updated'] ?? date('Y-m-d'), // Use remote date or fallback
+            'sections' => $remote_data['sections'], // Use sections from remote data
+            'download_link' => $remote_data['download_link'] ?? 'https://github.com/wisamsalwa/hello-world-plugin/archive/refs/heads/main.zip',
+        );
+
+        // Convert the array to an object and return it
+        return (object) $plugin_info;
     }
 
+    // Return false if the request is not for your plugin
     return $false;
 }
 add_filter('plugins_api', 'hello_world_plugin_info', 10, 3);
